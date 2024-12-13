@@ -1,0 +1,48 @@
+﻿@page "/weather"
+@using System.Net.Http.Json
+@using BlazorWebAssembly.Components
+@using BlazorWebAssembly.Models
+
+@inject HttpClient Http
+
+<h3>Weather forecast</h3>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var (forecast, index) in forecasts.Select((forecast, index) => (forecast, index)))
+            {
+                <TableRowComponent TItem="WeatherForecast"
+                                   Item="forecast"
+                                   Index="index"
+                                   Columns="@(new List<Func<WeatherForecast, object>> { 
+                                       x => x.Date.ToShortDateString(), 
+                                       x => x.TemperatureC, 
+                                       x => x.TemperatureF, 
+                                       x => x.Summary 
+                                   })" />
+            }
+        </tbody>
+    </table>
+}
+
+<InputText @bind-Value="Name" @bind-Value:after="() => { }" />
+<input type="text" @bind="Name" />
+
+    <p>@Name</p>
+
+
+

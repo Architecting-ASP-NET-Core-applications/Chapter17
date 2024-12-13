@@ -1,0 +1,41 @@
+﻿@page "/grid"
+<h3>Data Grid</h3>
+@if (data == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+        @foreach (var item in data)
+        {
+            <tr>
+                <td> @item.Id </td>
+                <td> @item.Name </td>
+            </tr>
+        }
+    </table>
+}
+
+@code
+{
+    private List<Item> data;
+    protected override async Task OnInitializedAsync()
+        => data = await FetchDataFromDatabase();
+
+    private Task<List<Item>> FetchDataFromDatabase()
+    {
+        // Simulate a database fetch
+        return Task.FromResult(new List<Item>
+        {
+            new Item { Id = 1, Name = "Item 1" },
+            new Item { Id = 2, Name = "Item 2" },
+        });
+    }
+
+    private class Item
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+}

@@ -1,0 +1,32 @@
+﻿@page "/"
+
+<h3>Submit Form</h3>
+<EditForm Model="userData" OnValidSubmit="HandleSubmit">
+    <div>
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="userData.Name" />
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <InputText id="email" @bind-Value="userData.Email" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+    private User userData = new User();
+
+    private void HandleSubmit()
+    {
+        // Process form data on the server
+        Console.WriteLine
+            ($"User Name: {userData.Name}, Email: {userData.Email}");
+    }
+
+    private class User
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+}

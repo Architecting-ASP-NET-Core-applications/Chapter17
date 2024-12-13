@@ -1,0 +1,26 @@
+﻿@* TableRowComponent.razor *@
+@typeparam TItem
+<style>
+    .table-row-even {
+        background-color: #f0f0f0;
+    }
+
+    .table-row-odd {
+        background-color: #ffffff;
+    }
+</style>
+
+<tr class="@RowClass">
+    @foreach (var column in Columns)
+    {
+        <td>@column.Invoke(Item)?.ToString()</td>
+    }
+</tr>
+
+@code {
+    [Parameter] public TItem Item { get; set; }
+    [Parameter] public int Index { get; set; }
+    [Parameter] public List<Func<TItem, object>> Columns { get; set; }
+
+    private string RowClass => Index % 2 == 0 ? "table-row-even" : "table-row-odd";
+}
